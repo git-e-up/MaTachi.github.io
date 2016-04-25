@@ -1,6 +1,19 @@
 title: POST to a WordPress JSON REST API from Python  
 published: 2013-10-05
 
+This post was very helpful, so I decided to fork it and make a couple updates to reflect a custom post type. Thanks to MaTachi for writing it.
+
+My Changes Below:
+Quick rundown: Add the WP REST API plugin (http://v2.wp-api.org/) and the Jason Basic Authentication plugin (get this one here so you don't get the wrong one through WP: https://github.com/WP-API/Basic-Auth ) and activate them.
+When creating your custom post type, make sure to include:
+`'show_in_rest'       => true,`
+
+Run `pip install requests` before trying run this if you don't already have 'requests' ( python whateveryoucallyourscript.py )
+
+From here you can skip down to line 59 to see the actual script
+
+
+MaTachi Original Post:
 In this post I'm gonna show how you can create pages on a WordPress blog from a
 Python script.
 
@@ -50,7 +63,8 @@ Doing this from Python can be done in the following way:
 
 
     def create_wordpress_page(title, content, publish):
-        url = 'http://localhost/wp-json.php/posts'
+        <!-- (this url is the endpoint for a custom post type called matt_post, the original is for regular posts) -->
+        url = 'http://localhost:8888/wp-rest/wp-json/wp/v2/matt_post'
         auth = b64encode('{}:{}'.format('admin', 'password'))
         payload = {
             'title': title,
